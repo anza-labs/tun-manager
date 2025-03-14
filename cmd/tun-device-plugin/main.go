@@ -45,11 +45,13 @@ const (
 )
 
 var (
-	logLevel string
+	logLevel   string
+	maxDevices uint
 )
 
 func main() {
 	flag.StringVar(&logLevel, "log-level", "info", "Set log level (debug, info, warn, error)")
+	flag.UintVar(&maxDevices, "devices", 10, "Set number of devices presented to kubelet")
 	flag.Parse()
 
 	var level slog.Level
@@ -84,7 +86,7 @@ func run(ctx context.Context, log *slog.Logger) error {
 	log.Info("Starting plugin")
 	eg, ctx := errgroup.WithContext(ctx)
 
-	tun := tundeviceplugin.New(pluginNamespace, log)
+	tun := tundeviceplugin.New(pluginNamespace, maxDevices, log)
 	dps := plugin.New(log)
 
 	grpcServer := dps.DevicePluginServer(tun)

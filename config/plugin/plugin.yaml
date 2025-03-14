@@ -44,6 +44,7 @@ spec:
             - /tun-device-plugin
           args:
             - -log-level=info
+            - -devices=10
           ports:
             - name: metrics
               containerPort: 8080

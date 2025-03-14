@@ -34,20 +34,20 @@ type Server struct {
 	log       *slog.Logger
 	namespace string
 	update    chan struct{}
-	counter   int
+	devices   uint
 	devs      []*v1beta1.Device
 }
 
 var _ v1beta1.DevicePluginServer = (*Server)(nil)
 
-func New(namespace string, log *slog.Logger) *Server {
+func New(namespace string, devices uint, log *slog.Logger) *Server {
 	if log == nil {
 		log = slog.New(slog.DiscardHandler)
 	}
 	s := &Server{
 		log:       log,
 		namespace: namespace,
-		counter:   0,
+		devices:   devices,
 		update:    make(chan struct{}),
 		devs:      []*v1beta1.Device{},
 	}
@@ -58,10 +58,13 @@ func New(namespace string, log *slog.Logger) *Server {
 func (s *Server) discover() {
 	if _, err := os.Stat(tunPath); err == nil {
 		s.log.Debug("Discovered tun device")
-		s.devs = append(s.devs, &v1beta1.Device{
-			ID:     fmt.Sprintf("%s%d", tunName, s.counter),
-			Health: v1beta1.Healthy,
-		})
+
+		for i := uint(0); i < s.devices; i++ {
+			s.devs = append(s.devs, &v1beta1.Device{
+				ID:     fmt.Sprintf("%s%d", tunName, i),
+				Health: v1beta1.Healthy,
+			})
+		}
 	} else {
 		s.log.Error("No tun device found")
 	}
@@ -106,11 +109,6 @@ func (s *Server) Allocate(
 	ctx context.Context,
 	req *v1beta1.AllocateRequest,
 ) (*v1beta1.AllocateResponse, error) {
-	s.devs = append(s.devs, &v1beta1.Device{
-		ID:     fmt.Sprintf("%s%d", tunName, s.counter),
-		Health: v1beta1.Healthy,
-	})
-	s.counter += 1
 	s.update <- struct{}{}
 
 	devices := []*v1beta1.DeviceSpec{
