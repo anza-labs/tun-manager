@@ -1,7 +1,7 @@
 images:
 - name: plugin
   newName: ghcr.io/anza-labs/tun-manager
-  newTag: v0.1.0
+  newTag: v0.1.1
 namePrefix: tun-device-
 namespace: anza-labs-kubelet-plugins
 resources:
