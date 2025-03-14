@@ -1,6 +1,6 @@
 # Adds namespace to all resources.
 namespace: anza-labs-kubelet-plugins
-namePrefix: kvm-device-
+namePrefix: tun-device-
 resources:
   - ../rbac
   - ../plugin

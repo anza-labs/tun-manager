@@ -67,7 +67,7 @@ spec:
               command:
                 - /grpc_health_probe
                 - -addr
-                - unix:///var/lib/kubelet/device-plugins/kvm.sock
+                - unix:///var/lib/kubelet/device-plugins/tun.sock
             initialDelaySeconds: 5
             periodSeconds: 10
           readinessProbe:
@@ -75,7 +75,7 @@ spec:
               command:
                 - /grpc_health_probe
                 - -addr
-                - unix:///var/lib/kubelet/device-plugins/kvm.sock
+                - unix:///var/lib/kubelet/device-plugins/tun.sock
             initialDelaySeconds: 2
             periodSeconds: 5
       volumes:

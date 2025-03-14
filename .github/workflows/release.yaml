@@ -40,6 +40,10 @@ jobs:
 
   image:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        image:
+          - tun-device-plugin
     steps:
       - uses: actions/checkout@v4
       - uses: docker/login-action@v3
@@ -57,10 +61,11 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           platforms: linux/amd64,linux/arm64
           push: true
+          file: ./cmd/${{ matrix.image }}/Dockerfile
           tags: |
-            ghcr.io/${{ github.event.repository.owner.name }}/tun-manager:${{ github.ref_name }}
+            ghcr.io/${{ github.event.repository.owner.name }}/${{ matrix.image }}:${{ github.ref_name }}
           labels: |
-            org.opencontainers.image.title="tun-manager"
+            org.opencontainers.image.title="${{ matrix.image }}"
             org.opencontainers.image.authors="anza-labs contributors"
             org.opencontainers.image.vendor="anza-labs"
             org.opencontainers.image.license="Apache-2.0"
