@@ -1,0 +1,6 @@
+checks:
+  exclude:
+    - run-as-non-root
+    - privileged-container
+    - privilege-escalation-container
+    - no-read-only-root-fs

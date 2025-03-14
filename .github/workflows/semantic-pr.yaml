@@ -1,0 +1,32 @@
+name: semantic-pr
+on:
+  pull_request_target:
+    types:
+      - opened
+      - reopened
+      - edited
+      - synchronize
+permissions:
+  pull-requests: read
+jobs:
+  pr-title:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          requireScope: true
+          subjectPattern: ^(?![A-Z]).+$
+          scopes: |
+            deps
+            plugin
+            example
+            image
+            kustomize
+            e2e
+            integration
+            unit
+            gh-actions
+            build-system
+            tools

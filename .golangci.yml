@@ -1,0 +1,60 @@
+run:
+  timeout: 5m
+  allow-parallel-runners: true
+  build-tags:
+    - integration
+issues:
+  # don't skip warning about doc comments
+  # don't exclude the default set of lint
+  exclude-use-default: false
+  exclude-rules:
+    - path: "api/*"
+      linters:
+        - lll
+    - path: "internal/webhook/*"
+      linters:
+        - dupl
+    - path: "internal/manifests/controlplane/*"
+      linters:
+        - dupl
+linters:
+  disable-all: true
+  enable:
+    - dupl
+    - errcheck
+    - gci
+    - ginkgolinter
+    - goconst
+    - gocyclo
+    - godot
+    - gofmt
+    - goimports
+    - gosimple
+    - govet
+    - ineffassign
+    - lll
+    - misspell
+    - nakedret
+    - nolintlint
+    - prealloc
+    - revive
+    - staticcheck
+    - typecheck
+    - unconvert
+    - unparam
+    - unused
+linters-settings:
+  gci:
+    sections:
+      - standard
+      - default
+      - blank
+      - dot
+      - prefix(k8s.io,sigs.k8s.io)
+      - prefix(github.com/anza-labs)
+  nolintlint:
+    require-explanation: true
+    require-specific: true
+  revive:
+    rules:
+      - name: comment-spacings

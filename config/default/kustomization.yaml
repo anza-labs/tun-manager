@@ -1,0 +1,7 @@
+# Adds namespace to all resources.
+namespace: anza-labs-kubelet-plugins
+namePrefix: kvm-device-
+resources:
+  - ../rbac
+  - ../plugin
+  - metrics_service.yaml
