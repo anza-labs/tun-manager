@@ -28,8 +28,8 @@ import (
 )
 
 const (
-	defaultImageName = "plugin"
-	defaultImageRef  = "ghcr.io/anza-labs/tun-manager"
+	defaultPluginImageName = "plugin"
+	defaultPluginImageRef  = "ghcr.io/anza-labs/tun-device-plugin"
 )
 
 func runCommand(name string, args ...string) error {
@@ -132,8 +132,8 @@ func release(version, fullVersion string) error {
 
 func main() {
 	versionFlag := flag.String("version", "", "Tagged version to build")
-	imageFlag := flag.String("image-name", defaultImageName, "Default image name")
-	newImageFlag := flag.String("image", defaultImageRef, "Default image reference")
+	imageFlag := flag.String("plugin-image-name", defaultPluginImageName, "Default image name")
+	newImageFlag := flag.String("plugin-image", defaultPluginImageRef, "Default image reference")
 
 	flag.Parse()
 
