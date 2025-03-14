@@ -2,6 +2,12 @@
 namespace: anza-labs-kubelet-plugins
 namePrefix: tun-device-
 resources:
-  - ../rbac
-  - ../plugin
-  - metrics_service.yaml
+- ../rbac
+- ../plugin
+- metrics_service.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+images:
+- name: plugin
+  newName: localhost:5005/tun-device-plugin
+  newTag: dev-e8f828-dirty
