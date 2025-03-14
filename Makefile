@@ -117,7 +117,7 @@ docker-push-controller: ## Push docker image with the controller.
 .PHONY: build-installer
 build-installer: kustomize ## Generate a consolidated YAML with CRDs and deployment.
 	mkdir -p dist
-	cd config/plugin && $(KUSTOMIZE) edit set image plugin=$(REPOSITORY)/tun-device-plugin:$(TAG)
+	cd config/default && $(KUSTOMIZE) edit set image plugin=$(REPOSITORY)/tun-device-plugin:$(TAG)
 	$(KUSTOMIZE) build config/default > dist/install.yaml
 
 ##@ Deployment
@@ -136,7 +136,7 @@ cluster-reset: kind ctlptl
 
 .PHONY: deploy
 deploy: kustomize ## Deploy controller to the K8s cluster specified in ~/.kube/config.
-	cd config/plugin && $(KUSTOMIZE) edit set image plugin=$(REPOSITORY)/tun-device-plugin:$(TAG)
+	cd config/default && $(KUSTOMIZE) edit set image plugin=$(REPOSITORY)/tun-device-plugin:$(TAG)
 	$(KUSTOMIZE) build config/default | $(KUBECTL) apply -f -
 
 .PHONY: undeploy
