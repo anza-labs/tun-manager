@@ -12,7 +12,7 @@ spec:
           apiVersion: apps/v1
           kind: DaemonSet
           metadata:
-            name: tun-manager
+            name: tun-device-plugin
             namespace: anza-labs-kubelet-plugins
           status:
             numberAvailable: 1
